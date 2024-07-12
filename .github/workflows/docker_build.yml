@@ -2,8 +2,9 @@ name: Deploy Docker Image to AWS
 
 on:
   workflow_run:
-  workflows: ['Publish Docker Image']
-  types: [completed]
+    workflows: ['Publish Docker Image']
+    types:
+      - completed
 
 jobs:
   build:
@@ -13,11 +14,11 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Login to docker hub
-        run: echo "${{secrets.DOCKERHUB_TOKEN}}" | docker login -u "${{secrets.DOCKERHUB_USERNAME}}" --password-stdin
+      - name: Login to Docker Hub
+        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
       - name: Build Docker Image
-        run: docker build . --file Dockerfile --tag ${{secrets.DOCKERHUB_USERNAME}}/uni-auth-docker-aws-cicd:latest
+        run: docker build . --file Dockerfile --tag ${{ secrets.DOCKERHUB_USERNAME }}/uni-auth-docker-aws-cicd:latest
 
       - name: Push Docker Image
-        run: docker push ${{secrets.DOCKERHUB_USERNAME}}/uni-auth-docker-aws-cicd:latest
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/uni-auth-docker-aws-cicd:latest
