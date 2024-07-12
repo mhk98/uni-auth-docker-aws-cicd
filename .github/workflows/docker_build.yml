@@ -1,9 +1,8 @@
-name: Deploy Docker image to AWS
+name: Publish Docker Image
 
 on:
-  workflow_run:
-  workflows: ['Publish Docker Image']
-  types: [completed]
+  push:
+    branches: ['main']
 
 jobs:
   build:
